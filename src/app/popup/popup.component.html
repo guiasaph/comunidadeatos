@@ -1,0 +1,11 @@
+<h1 mat-dialog-title *ngIf="!data.erro">Confirmado!</h1>
+<h1 mat-dialog-title *ngIf="data.erro">Pedimos Desculpas!</h1>
+<div mat-dialog-content *ngIf="!data.erro">
+  {{data.mensagem}}
+</div>
+<div mat-dialog-content *ngIf="data.erro" style="color: red;">
+  {{data.mensagem}}
+</div>
+<div style="display: flex; align-items: center; justify-content: center;">
+  <button mat-button mat-dialog-close mat-flat-button color="primary" style="margin-top: 5%; ">OK</button>
+</div>
