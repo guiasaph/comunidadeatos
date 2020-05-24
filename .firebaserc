@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "comunidade-atos-278201": {
+      "hosting": {
+        "comunidade-atos-confirmacao": [
+          "comunidade-atos-278201"
+        ]
+      }
+    }
+  }
+}

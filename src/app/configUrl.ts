@@ -1,1 +1,1 @@
-export const url = 'http://192.168.25.5:3000/api';
+export const url = 'https://boiling-forest-22324.herokuapp.com/api';

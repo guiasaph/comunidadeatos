@@ -1,0 +1,19 @@
+{
+  "hosting": [
+    {
+      "target": "comunidade-atos-confirmacao",
+      "public": "dist/comunidade-atos-confirmacao",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ]
+    }
+  ]
+}
