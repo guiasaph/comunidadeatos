@@ -15,6 +15,7 @@ import { PopupComponent } from './popup/popup.component';
 import { TabelaConfirmadosComponent } from './tabela-confirmados/tabela-confirmados.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     HttpClientModule,
     MatDialogModule,
     MatTableModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatProgressSpinnerModule
   ],
   providers: [],
   bootstrap: [AppComponent]

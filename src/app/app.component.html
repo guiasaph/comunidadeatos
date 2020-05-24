@@ -1,4 +1,4 @@
-<html>
+<html [ngStyle]="{ 'filter': enableOverlay ? 'blur(8px)' : 'blur(0px)'}">
   <mat-tab-group [backgroundColor]="'primary'" mat-align-tabs="center" #matTab>
     <mat-tab label="Cadastrar">
       <h2 *ngIf="enableElements" align="center" style="padding-top: 2%;">
@@ -17,16 +17,27 @@
           <button *ngIf="enableElements" [disabled]="validName.invalid" mat-flat-button (click)="inserirPessoa(matTab)" color="primary">Enviar</button>
         </div>
 
-
-    </mat-tab>
-    <mat-tab label="Confirmados">
-      <ng-template matTabContent>
-        <app-tabela-confirmados [matTabIndex]="matTab" (resetForm)="resetForm()"></app-tabela-confirmados>
-      </ng-template>
-    </mat-tab>
-  </mat-tab-group>
-
-</html>
-
+        
+        
+      </mat-tab>
+      <mat-tab label="Confirmados">
+        <ng-template matTabContent>
+          <app-tabela-confirmados [matTabIndex]="matTab" (resetForm)="resetForm()"></app-tabela-confirmados>
+        </ng-template>
+      </mat-tab>
+    </mat-tab-group>
+    
+    </html>
+    
+    <div *ngIf="enableOverlay" style="height: 100%; width: 100%; z-index: 1; display: block; position: fixed; top: 0; left: 0; background-color: rgba(0,0,0, 0.8);">
+      <div style="display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; flex-direction: column;">
+        <div>
+          <h1 style="color: white;">Por favor aguarde. Estamos confirmando a sua presença</h1>
+        </div>
+        <div>
+          <mat-spinner></mat-spinner>
+        </div>
+      </div>
+    </div>
 
 

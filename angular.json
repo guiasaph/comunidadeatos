@@ -127,5 +127,8 @@
       }
     }
   },
-  "defaultProject": "comunidade-atos-confirmacao"
+  "defaultProject": "comunidade-atos-confirmacao",
+  "cli": {
+    "analytics": "d9f2a141-d281-4d82-a8ec-36d53b2175a0"
+  }
 }

@@ -17,6 +17,7 @@ export class AppComponent {
 
   validName = new FormControl('', [Validators.required]);
   enableElements = true;
+  enableOverlay = false;
   nome;
 
   getErrorMessage() {
@@ -26,7 +27,9 @@ export class AppComponent {
   }
 
   inserirPessoa(matTab: MatTabGroup) {
+    this.enableOverlay = true;
     this.confirmarPresencaService.registerNameInDataBase(this.nome).subscribe((res) => {
+      this.enableOverlay = false;
       const dialogRef = this.dialog.open(PopupComponent, {
         data: {
           mensagem: `Olá irmã(o) ${this.nome}. Obrigado pela confirmação. Nos vemos domingo!`,
@@ -37,6 +40,7 @@ export class AppComponent {
       dialogRef.afterClosed().subscribe(() => { matTab.selectedIndex++; });
       this.enableElements = false;
     }, (err) => {
+      this.enableOverlay = false;
       this.dialog.open(PopupComponent, {
         data: {
           mensagem: `Olá irmã(o) ${this.nome}. Pedimos Desculpas mas não foi possível inseri-lo na lista. Possivelmente a lista já está cheia (favor verificar na aba Confirmados), ou estamos enfrentando algum problema de conexão.`,
