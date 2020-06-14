@@ -1,4 +1,4 @@
-<html [ngStyle]="{ 'filter': enableOverlay ? 'blur(8px)' : 'blur(0px)'}">
+<html *ngIf="checkAvailability() === true" [ngStyle]="{ 'filter': enableOverlay ? 'blur(8px)' : 'blur(0px)'}">
     <meta name="viewport" content="initial-scale=1, user-scalable=no">
       <mat-tab-group [backgroundColor]="'primary'" mat-align-tabs="center" #matTab>
         <mat-tab label="Cadastrar">
@@ -40,4 +40,8 @@
       </div>
     </div>
 
+    <div  style="text-align: center;" *ngIf="checkAvailability() === false">
+      <h1>O site de confirmação está indisponível das 9h - 12h</h1>
+    </div>
+<!-- <button (click)="checkAvailability()">teste</button> -->
 

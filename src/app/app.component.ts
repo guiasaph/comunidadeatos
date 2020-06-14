@@ -55,4 +55,16 @@ export class AppComponent {
     this.enableElements = true;
     this.nome = undefined;
   }
+
+  checkAvailability() {
+    const actualTime = new Date(new Date().setUTCHours(new Date().getUTCHours() - 3)).toUTCString();
+    if (actualTime.slice(0, 3) === 'Sun' &&
+                            ((new Date('01-01-2020 ' + actualTime.slice(17, 25)) >= new Date('01-01-2020 09:00:00')) &&
+                                        (new Date('01-01-2020 ' + actualTime.slice(17, 25)) <= new Date('01-01-2020 12:00:00')))) {
+      return false;
+    }
+    else {
+      return true;
+    }
+  }
 }

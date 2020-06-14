@@ -10,6 +10,11 @@ import { MatTableDataSource, MatTable } from '@angular/material/table';
   styleUrls: ['./tabela-confirmados.component.css']
 })
 export class TabelaConfirmadosComponent implements OnInit {
+
+  displayedColumns: string[] = ['position', 'name', 'dia'];
+  dataSource = new MatTableDataSource();
+  numero = 0;
+
   @Input() matTabIndex: MatTabGroup;
   @Output() resetForm = new EventEmitter();
   @ViewChild('tabela') tabela: MatTable<any>;
@@ -19,16 +24,10 @@ export class TabelaConfirmadosComponent implements OnInit {
   ngOnInit(): void {
     this.confirmarPresencaService.getAllRegister().subscribe((res: any) => {
       res.forEach(elem => {
-        const createBRDate = new Date(elem.createdAt.slice(0, 10));
-        createBRDate.setHours(createBRDate.getHours() - 3);
+        const createBRDate = new Date(new Date(elem.createdAt).setUTCHours(new Date(elem.createdAt).getUTCHours() - 3)).toUTCString();
         this.dataSource.data.push({position: ++this.numero, name: elem.name, dataConfirmacao: createBRDate});
       });
       this.tabela.renderRows();
     });
   }
-
-  displayedColumns: string[] = ['position', 'name', 'dia'];
-  dataSource = new MatTableDataSource;
-  numero = 0;
-
 }
