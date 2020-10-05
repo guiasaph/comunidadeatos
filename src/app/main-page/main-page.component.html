@@ -1,0 +1,53 @@
+<html *ngIf="checkAvailability() === true" [ngStyle]="{ 'filter': enableOverlay ? 'blur(8px)' : 'blur(0px)'}">
+    <meta name="viewport" content="initial-scale=1, user-scalable=no">
+      <mat-tab-group [backgroundColor]="'primary'" mat-align-tabs="center" #matTab>
+        <mat-tab label="Cadastrar">
+          <h2 *ngIf="enableElements" align="center" style="padding-top: 2%;">
+            Olá irmã(o) {{nome}}. <br><br> Para o próximo culto de domingo, por favor, insira seu nome abaixo e pressione Enviar para confirmar sua presença.
+          </h2>
+          <h2 *ngIf="!enableElements" align="center" style="padding-top: 2%;">
+            Olá irmã(o) {{nome}}. <br><br> Obrigado pela confirmação. Nos vemos domingo!
+          </h2>
+          <mat-form-field style="padding-left: 5%; padding-top: 2%; width: 90%">
+            <mat-label>Nome</mat-label>
+            <input matInput disabled placeholder="Insira seu nome aqui" [formControl]="validName" required [(ngModel)]="nome">
+            <mat-error *ngIf="validName.invalid">{{getErrorMessage()}}</mat-error>
+          </mat-form-field>
+          <br>
+          <div style="margin-top: 5%; display: flex; align-items: center; justify-content: center;">
+            <button *ngIf="enableElements" [disabled]="validName.invalid" mat-flat-button (click)="inserirPessoa(matTab)" color="primary">Enviar</button>
+          </div>
+          
+          
+          
+        </mat-tab>
+        <mat-tab label="Confirmados">
+          <ng-template matTabContent>
+            <app-tabela-confirmados [matTabIndex]="matTab" (resetForm)="resetForm()"></app-tabela-confirmados>
+          </ng-template>
+        </mat-tab>
+      </mat-tab-group>
+      <div style="display: flex; justify-content: center; padding-top: 5%; text-align: center;">
+        <p>Já é um membro de nossa Comunidade? Faça seu cadastro, <a routerLink="/cadastro-membro" routerLinkActive="active">Clique aqui</a><br>
+        <!-- <a routerLink="/login" routerLinkActive="active">Administração Comunidade Atos</a></p> -->
+      </div>
+      <div style="display: flex; justify-content: center; text-align: center; align-self: flex-end;">
+        <p>É um pastor? Faça login. <a routerLink="/login" routerLinkActive="active">Clique aqui</a><br>
+        <!-- <a routerLink="/login" routerLinkActive="active">Administração Comunidade Atos</a></p> -->
+      </div>
+</html>
+    
+    <div *ngIf="enableOverlay" style="height: 100%; width: 100%; z-index: 1; display: block; position: fixed; top: 0; left: 0; background-color: rgba(0,0,0, 0.8);">
+      <div style="display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; flex-direction: column;">
+        <div>
+          <h1 style="color: white;">Por favor aguarde. Estamos confirmando a sua presença</h1>
+        </div>
+        <div>
+          <mat-spinner></mat-spinner>
+        </div>
+      </div>
+    </div>
+
+    <div  style="text-align: center;" *ngIf="checkAvailability() === false">
+      <h1>O site de confirmação está indisponível das 9h - 12h</h1>
+    </div>

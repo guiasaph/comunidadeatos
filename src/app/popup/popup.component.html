@@ -1,11 +1,19 @@
-<h1 mat-dialog-title *ngIf="!data.erro">Confirmado!</h1>
-<h1 mat-dialog-title *ngIf="data.erro">Pedimos Desculpas!</h1>
-<div mat-dialog-content *ngIf="!data.erro">
+<h1 mat-dialog-title *ngIf="data.erro==='sucesso'">Confirmado!</h1>
+<h1 mat-dialog-title *ngIf="data.erro==='falha'">Pedimos Desculpas!</h1>
+<h1 mat-dialog-title *ngIf="data.erro==='confirma-exclusao'" style="text-align: center;">Remover</h1>
+<h1 mat-dialog-title *ngIf="data.erro==='falha-login'" style="text-align: center;">Falha no Login</h1>
+<div mat-dialog-content *ngIf="data.erro==='sucesso'">
   {{data.mensagem}}
 </div>
-<div mat-dialog-content *ngIf="data.erro" style="color: red;">
+<div mat-dialog-content *ngIf="data.erro==='falha' || data.erro==='confirma-exclusao' || data.erro==='falha-login'" style="color: red;">
   {{data.mensagem}}
 </div>
-<div style="display: flex; align-items: center; justify-content: center;">
+<div style="display: flex; align-items: center; justify-content: center;" *ngIf="data.erro==='sucesso' || data.erro==='falha' || data.erro==='falha-login'">
   <button mat-button mat-dialog-close mat-flat-button color="primary" style="margin-top: 5%; ">OK</button>
+</div>
+<div *ngIf="data.erro==='confirma-exclusao'">
+  <div style="display: flex; align-items: center; justify-content: center;">
+    <button mat-button mat-dialog-close mat-flat-button color="warn" style="margin-top: 5%; margin-right: 5%;" (click)="data.confirm = true">Sim</button>
+    <button mat-button mat-dialog-close mat-flat-button color="primary" style="margin-top: 5%; ">Cancelar</button>
+  </div>
 </div>

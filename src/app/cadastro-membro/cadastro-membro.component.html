@@ -1,0 +1,28 @@
+    <div class="mat-typography">
+        <div style="display: flex; justify-content: center; margin: 1% 1%;">
+            <button mat-fab color="primary" (click)="goHome()" aria-label="Voltar Tela Inicial">
+                <mat-icon>home</mat-icon>
+            </button>
+        </div>
+        <h1 class="mat-display-1" style="display: flex; justify-content: center; padding-top: 1%; text-align: center;">Cadastro de Membros<br>Comunidade Atos</h1>
+        
+        <div style="display: flex; justify-content: center; flex-direction: column; padding: 1% 5% 5% 5%;">
+            <mat-form-field appearance="fill" floatLabel="auto">
+                <mat-label>Nome Completo</mat-label>
+                <input matInput placeholder="Insira seu Nome Completo" [formControl]="name">
+            </mat-form-field>
+        
+            <mat-form-field appearance="fill" floatLabel="auto" style="padding-top: 5%;">
+                <mat-label>Celular/WhatsApp</mat-label>
+                <input matInput placeholder="Insira seu numero de Celular/Whatsapp" [formControl]="phone" mask="(00) 0 0000-0000">
+            </mat-form-field>
+    
+            <mat-form-field appearance="fill" floatLabel="auto" style="padding-top: 5%;">
+                <mat-label>Data de Nascimento</mat-label>
+                <input matInput placeholder="Insira sua Data de Nascimento" [formControl]="birthDate" mask="00/00/0000">
+            </mat-form-field>
+        </div>
+        <div style="display: flex; justify-content: center;">
+            <button mat-flat-button color="primary" (click)="sendInformation()" [disabled]="!(name.valid && phone.valid && birthDate.valid)">Enviar Informações</button>
+        </div>
+    </div>

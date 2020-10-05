@@ -16,12 +16,27 @@ import { TabelaConfirmadosComponent } from './tabela-confirmados/tabela-confirma
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { AdminLoginComponent } from './admin-login/admin-login.component';
+import { AdminPanelComponent } from './admin-panel/admin-panel.component';
+import { CadastroMembroComponent } from './cadastro-membro/cadastro-membro.component';
+import { MainPageComponent } from './main-page/main-page.component';
+import { IConfig, NgxMaskModule } from 'ngx-mask';
+import {MatIconModule} from '@angular/material/icon';
+import {MatCardModule} from '@angular/material/card';
 
+const maskConfig: Partial<IConfig> = {
+  validation: true,
+  dropSpecialCharacters: false
+};
 @NgModule({
   declarations: [
     AppComponent,
     PopupComponent,
-    TabelaConfirmadosComponent
+    TabelaConfirmadosComponent,
+    AdminLoginComponent,
+    AdminPanelComponent,
+    CadastroMembroComponent,
+    MainPageComponent
   ],
   imports: [
     BrowserModule,
@@ -37,7 +52,10 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     MatDialogModule,
     MatTableModule,
     MatPaginatorModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    NgxMaskModule.forRoot(maskConfig),
+    MatIconModule,
+    MatCardModule
   ],
   providers: [],
   bootstrap: [AppComponent]

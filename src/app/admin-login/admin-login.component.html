@@ -1,0 +1,18 @@
+<div class="mat-typography" style="display: flex; flex-direction: column; justify-content: center; align-items: center; width: 100%; height: 100%;">
+    <mat-card class="mobile" >
+        <mat-card-header style="margin-left: 9%; margin-top: 10%;">
+            <div mat-card-avatar class="comunidade-atos-image"></div>
+            <mat-card-title>Administração</mat-card-title>
+            <mat-card-subtitle>Comunidade Atos</mat-card-subtitle>
+        </mat-card-header>
+        <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+            <mat-form-field style="width: 80%; margin-top: 5%;">
+                <input matInput placeholder="Usuário" [formControl]="usuario">
+            </mat-form-field>
+            <mat-form-field style="width: 80%;">
+                <input type="password" matInput placeholder="Senha" [formControl]="senha">
+            </mat-form-field>
+            <button [disabled]="(usuario.invalid || senha.invalid)" (click)="login()" mat-raised-button color="primary" style="margin-top: 10%;">Login</button>
+        </div>
+    </mat-card>
+</div>

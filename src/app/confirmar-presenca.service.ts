@@ -12,10 +12,10 @@ export class ConfirmarPresencaService {
   public nomes = [];
 
   registerNameInDataBase(pessoa: any) {
-    return this.http.post(`${url}/create`, {name: pessoa});
+    return this.http.post(`${url}/confirmation/create`, {name: pessoa});
   }
 
   getAllRegister() {
-    return this.http.get(`${url}/all`);
+    return this.http.get(`${url}/confirmation/all`);
   }
 }
