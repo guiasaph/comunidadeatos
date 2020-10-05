@@ -9,7 +9,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import {MatButtonModule} from '@angular/material/button';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import {MatDialogModule} from '@angular/material/dialog';
 import { PopupComponent } from './popup/popup.component';
 import { TabelaConfirmadosComponent } from './tabela-confirmados/tabela-confirmados.component';
@@ -23,6 +23,7 @@ import { MainPageComponent } from './main-page/main-page.component';
 import { IConfig, NgxMaskModule } from 'ngx-mask';
 import {MatIconModule} from '@angular/material/icon';
 import {MatCardModule} from '@angular/material/card';
+import { InterceptorService } from './interceptor.service';
 
 const maskConfig: Partial<IConfig> = {
   validation: true,
@@ -57,7 +58,7 @@ const maskConfig: Partial<IConfig> = {
     MatIconModule,
     MatCardModule
   ],
-  providers: [],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
