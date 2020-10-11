@@ -13,17 +13,15 @@ export class CadastrarMembroService {
     return this.http.post(url + '/register/create', user);
   }
 
-  getAllMembers(token) {
-    return this.http.get(url + '/register/all', { headers: { authorization: token}}); //feito assim por um problema do local storage
+  getAllMembers() {
+    return this.http.get(url + '/register/all');
   }
 
   deleteMember(member) {
-    return this.http.delete(url + '/register/' + member.id, header);
+    return this.http.delete(url + '/register/' + member.id);
   }
 
   updateMember(member) {
-    return this.http.put(url + '/register/', member, header);
+    return this.http.put(url + '/register/', member);
   }
 }
-
-const header = { headers: { authorization: window.localStorage.getItem('bearer')}};

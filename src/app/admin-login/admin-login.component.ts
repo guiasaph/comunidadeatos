@@ -18,25 +18,25 @@ export class AdminLoginComponent implements OnInit, CanActivate {
 
   constructor(private loginAPI: LoginService, public dialog: MatDialog, private router: Router) { }
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    if (this.loginAPI.token != null){
+    if (localStorage.getItem('bearer') != null){
       return true;
+    } else {
+      this.router.navigate(['/login']);
+      return false;
     }
-    this.router.navigate(['/login']);
-    return false;
   }
 
 
 
   ngOnInit(): void {
-    if (window.localStorage.getItem('bearer') != null) {
+    if (localStorage.getItem('bearer') != null) {
       this.router.navigate(['/admin-panel']);
     }
   }
 
   login() {
     this.loginAPI.loginPastores({user: this.usuario.value, pwd: this.senha.value}).subscribe(resp => {
-      window.localStorage.setItem('bearer', resp.token);
-      this.loginAPI.token = resp.token;
+      localStorage.setItem('bearer', resp.token);
       this.router.navigate(['/admin-panel']);
     }, err => {
       this.dialog.open(PopupComponent, {

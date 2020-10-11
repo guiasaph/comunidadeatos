@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { url } from './configUrl';
 
 @Injectable({
@@ -9,9 +9,9 @@ import { url } from './configUrl';
 })
 export class LoginService {
 
-  urlLogin = url + '/auth';
+  isLoading: Subject<boolean> = new Subject();
 
-  token = null;
+  urlLogin = url + '/auth';
 
   constructor(private http: HttpClient) { }
 

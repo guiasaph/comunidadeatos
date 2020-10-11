@@ -23,22 +23,15 @@ export class AdminPanelComponent implements OnInit {
 
   ngOnInit(): void {
     this.dataSource = new MatTableDataSource<any>();
-    this.membroService.getAllMembers(this.login.token).subscribe((elem: any) => {
+    this.membroService.getAllMembers().subscribe((elem: any) => {
       this.dataSource.data = elem;
       this.dataSource.paginator = this.paginator;
-    },
-    err => {
-      if (err.status === 403 || err.status === 401) {
-        this.login.token = null;
-        window.localStorage.clear();
-        this.route.navigate(['/login']);
-      }
     });
   }
 
   applyFilter(filterValue: string) {
-    filterValue = filterValue.trim(); // Remove whitespace
-    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+    filterValue = filterValue.trim();
+    filterValue = filterValue.toLowerCase();
     this.dataSource.filter = filterValue;
   }
 
@@ -57,7 +50,7 @@ export class AdminPanelComponent implements OnInit {
     dialogRef.afterClosed().subscribe(() => {
       if (dialogRef.componentInstance.data.confirm) {
         this.membroService.deleteMember(item).subscribe(() => {
-          this.membroService.getAllMembers(this.login.token).subscribe((res: any) => {
+          this.membroService.getAllMembers().subscribe((res: any) => {
             this.dataSource.data = res;
           });
         });
@@ -70,7 +63,7 @@ export class AdminPanelComponent implements OnInit {
     delete item.updateCelular;
     delete item.updateDataNascimento;
     this.membroService.updateMember(item).subscribe(() => {
-      this.membroService.getAllMembers(this.login.token).subscribe((res: any) => {
+      this.membroService.getAllMembers().subscribe((res: any) => {
         this.dataSource.data = res;
         this.dialog.open(PopupComponent, {
           data: {

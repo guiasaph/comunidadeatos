@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 import {
-  HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpResponse
+  HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpResponse, HttpErrorResponse
 } from '@angular/common/http';
-import { Observable, of } from "rxjs";
-import { tap, catchError } from "rxjs/operators";
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
+import { catchError, finalize, tap } from 'rxjs/operators';
+import { Router } from '@angular/router';
+import { LoginService } from './login.service';
 
 
 @Injectable({
@@ -11,19 +13,32 @@ import { tap, catchError } from "rxjs/operators";
 })
 export class InterceptorService implements HttpInterceptor{
 
-  loadScreen = false;
+  constructor(private router: Router, private login: LoginService) { }
 
-  constructor() { }
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    return next.handle(req).pipe(
-      tap(res => {
-        if (res instanceof HttpResponse) {
-          this.loadScreen = false;
+    if (localStorage.getItem('bearer') != null) {
+      req = req.clone({
+        setHeaders: {
+          authorization: localStorage.getItem('bearer')
         }
+      });
+    }
+    return next.handle(req).pipe(
+      tap(() => {
+        this.login.isLoading.next(true);
       }),
-      catchError((err: any) => {
-        // you can put a generic error treatement here
-          return of(err);
-      }));
+      catchError(err => {
+        if (err instanceof HttpErrorResponse) {
+          if (err.status === 401 || err.status === 403) {
+            localStorage.clear();
+            this.router.navigate(['/login']);
+          }
+        }
+        return throwError(new Error(err.statusText));
+      }),
+      finalize(() => {
+        this.login.isLoading.next(false);
+      })
+    );
   }
 }
