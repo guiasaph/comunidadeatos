@@ -58,6 +58,9 @@ const maskConfig: Partial<IConfig> = {
     MatIconModule,
     MatCardModule
   ],
+  entryComponents: [
+    PopupComponent
+  ],
   providers: [{
     provide: HTTP_INTERCEPTORS,
     useClass: InterceptorService,
