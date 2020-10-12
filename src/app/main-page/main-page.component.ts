@@ -3,6 +3,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTabGroup } from '@angular/material/tabs';
 import { ConfirmarPresencaService } from '../confirmar-presenca.service';
+import { LoginService } from '../login.service';
 import { PopupComponent } from '../popup/popup.component';
 
 @Component({
@@ -12,10 +13,11 @@ import { PopupComponent } from '../popup/popup.component';
 })
 export class MainPageComponent {
 
-  constructor(private confirmarPresencaService: ConfirmarPresencaService, public dialog: MatDialog) { }
+  constructor(private confirmarPresencaService: ConfirmarPresencaService, public dialog: MatDialog, private loginAPI: LoginService) { }
 
   validName = new FormControl('', [Validators.required]);
   enableElements = true;
+  recaptchaFail = true;
   nome;
 
   getErrorMessage() {
@@ -49,6 +51,12 @@ export class MainPageComponent {
     this.validName = new FormControl({ value: '', disabled: false });
     this.enableElements = true;
     this.nome = undefined;
+  }
+
+  resolved(captchaResponse: string) {
+    this.loginAPI.checkReCAPTCHA(captchaResponse).subscribe((res: any) => {
+      this.recaptchaFail = !res.success;
+    });
   }
 
 }

@@ -12,7 +12,10 @@
             <mat-form-field style="width: 80%;">
                 <input type="password" matInput placeholder="Senha" [formControl]="senha">
             </mat-form-field>
-            <button [disabled]="(usuario.invalid || senha.invalid)" (click)="login()" mat-raised-button color="primary" style="margin-top: 10%;">Login</button>
+            <div style="margin-top: 3%; transform:scale(0.7);-webkit-transform:scale(0.7);">
+                <re-captcha (resolved)="resolved($event)" siteKey="6LctVNYZAAAAAFsBINiDH9tyIeC5rM-tIapsYynm"></re-captcha>
+            </div>
+            <button [disabled]="(usuario.invalid || senha.invalid || recaptchaFail)" mat-raised-button color="primary" (click)="login()" style="margin-top: 10%;">Login</button>
         </div>
     </mat-card>
 </div>

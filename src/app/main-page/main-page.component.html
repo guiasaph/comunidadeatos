@@ -14,8 +14,11 @@
             <mat-error *ngIf="validName.invalid">{{getErrorMessage()}}</mat-error>
           </mat-form-field>
           <br>
-          <div style="margin-top: 5%; display: flex; align-items: center; justify-content: center;">
-            <button *ngIf="enableElements" [disabled]="validName.invalid" mat-flat-button (click)="inserirPessoa(matTab)" color="primary">Enviar</button>
+          <div *ngIf="enableElements" style="display: flex; justify-content: center; align-items: center; margin-top: 4%; transform:scale(0.7);-webkit-transform:scale(0.7);">
+            <re-captcha (resolved)="resolved($event)" siteKey="6LctVNYZAAAAAFsBINiDH9tyIeC5rM-tIapsYynm"></re-captcha>
+          </div>
+          <div style="margin-top: 1%; display: flex; align-items: center; justify-content: center;">
+            <button *ngIf="enableElements" [disabled]="(validName.invalid || recaptchaFail)" mat-flat-button (click)="inserirPessoa(matTab)" color="primary">Enviar</button>
           </div>
           
           

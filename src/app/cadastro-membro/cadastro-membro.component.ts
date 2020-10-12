@@ -3,6 +3,7 @@ import {FormControl, Validators} from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { CadastrarMembroService } from '../cadastrar-membro.service';
+import { LoginService } from '../login.service';
 import { PopupComponent } from '../popup/popup.component';
 
 @Component({
@@ -21,8 +22,9 @@ export class CadastroMembroComponent implements OnInit {
     name = new FormControl('', [Validators.pattern('[A-Za-z\u00C0-\u00FF]+[ ][A-Za-z\u00C0-\u00FF ]*'), Validators.required]);
     phone = new FormControl('', [Validators.pattern('[(][0-9]{2}[)][ ][0-9]{1}[ ][0-9]{4}-[0-9]{4}'), Validators.required]);
     birthDate = new FormControl('', [Validators.pattern('[0-9]{2}/[0-9]{2}/[0-9]{4}'), Validators.required]);
+    recaptchaFail = true;
 
-  constructor(private router: Router, private service: CadastrarMembroService, public dialog: MatDialog) { }
+  constructor(private router: Router, private service: CadastrarMembroService, public dialog: MatDialog, private loginAPI: LoginService) { }
 
   ngOnInit(): void {
   }
@@ -46,6 +48,12 @@ export class CadastroMembroComponent implements OnInit {
 
   goHome() {
     this.router.navigate(['/']);
+  }
+
+  resolved(captchaResponse: string) {
+    this.loginAPI.checkReCAPTCHA(captchaResponse).subscribe((res: any) => {
+      this.recaptchaFail = !res.success;
+    });
   }
 
 }

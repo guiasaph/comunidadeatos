@@ -22,7 +22,10 @@
                 <input matInput placeholder="Insira sua Data de Nascimento" [formControl]="birthDate" mask="00/00/0000">
             </mat-form-field>
         </div>
+        <div style="display: flex; justify-content: center; margin-bottom: 3%; transform:scale(0.7);-webkit-transform:scale(0.7);">
+            <re-captcha (resolved)="resolved($event)" siteKey="6LctVNYZAAAAAFsBINiDH9tyIeC5rM-tIapsYynm"></re-captcha>
+        </div>
         <div style="display: flex; justify-content: center;">
-            <button mat-flat-button color="primary" (click)="sendInformation()" [disabled]="!(name.valid && phone.valid && birthDate.valid)">Enviar Informações</button>
+            <button mat-flat-button color="primary" (click)="sendInformation()" [disabled]="!(name.valid && phone.valid && birthDate.valid && !recaptchaFail)">Enviar Informações</button>
         </div>
     </div>

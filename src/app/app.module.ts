@@ -24,6 +24,7 @@ import { IConfig, NgxMaskModule } from 'ngx-mask';
 import {MatIconModule} from '@angular/material/icon';
 import {MatCardModule} from '@angular/material/card';
 import { InterceptorService } from './interceptor.service';
+import { RecaptchaModule } from 'ng-recaptcha';
 
 const maskConfig: Partial<IConfig> = {
   validation: true,
@@ -56,7 +57,8 @@ const maskConfig: Partial<IConfig> = {
     MatProgressSpinnerModule,
     NgxMaskModule.forRoot(maskConfig),
     MatIconModule,
-    MatCardModule
+    MatCardModule,
+    RecaptchaModule
   ],
   entryComponents: [
     PopupComponent

@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
-import { Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { url } from './configUrl';
 
 @Injectable({
@@ -17,6 +16,11 @@ export class LoginService {
 
   loginPastores(credentials): any {
     return this.http.post(this.urlLogin + '/login', credentials);
+  }
+
+  checkReCAPTCHA(token) {
+    return this.http.post(this.urlLogin + '/recaptcha',
+      { response: token });
   }
 
 }

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
-import { Observable } from 'rxjs';
 import { LoginService } from '../login.service';
 import { PopupComponent } from '../popup/popup.component';
 
@@ -15,6 +14,7 @@ export class AdminLoginComponent implements OnInit, CanActivate {
 
   usuario = new FormControl('', [Validators.required]);
   senha = new FormControl('', [Validators.required]);
+  recaptchaFail = true;
 
   constructor(private loginAPI: LoginService, public dialog: MatDialog, private router: Router) { }
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
@@ -25,8 +25,6 @@ export class AdminLoginComponent implements OnInit, CanActivate {
       return false;
     }
   }
-
-
 
   ngOnInit(): void {
     if (localStorage.getItem('bearer') != null) {
@@ -45,6 +43,12 @@ export class AdminLoginComponent implements OnInit, CanActivate {
           erro: 'falha-login'
         }
       });
+    });
+  }
+
+  resolved(captchaResponse: string) {
+    this.loginAPI.checkReCAPTCHA(captchaResponse).subscribe((res: any) => {
+      this.recaptchaFail = !res.success;
     });
   }
 
