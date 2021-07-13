@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { AfterContentChecked, ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import * as moment from 'moment-timezone';
 import { LoginService } from './login.service';
 
@@ -10,20 +10,18 @@ import { LoginService } from './login.service';
 })
 export class AppComponent implements OnInit {
 
+  maintenance;
+
   constructor(public login: LoginService) {}
 
   ngOnInit(): void {
-  }
-
-  checkAvailability() {
-    const actualTime = moment.tz('America/Sao_Paulo').format();
-    if (moment.tz('America/Sao_Paulo').format('dddd') === 'Sunday' &&
-      ((new Date('01-01-2020 ' + actualTime.slice(11, 19)) >= new Date('01-01-2020 10:00:00')) &&
-        (new Date('01-01-2020 ' + actualTime.slice(11, 19)) <= new Date('01-01-2020 12:00:00')))) {
-      return false;
-    }
-    else {
-      return true;
-    }
+    this.login.getServerTime().subscribe((res: any) => {
+      if (res.time.split(' ')[0]=='domingo' && Number(res.time.split(' ')[1].substring(0,2)) >= 9 && Number(res.time.split(' ')[1].substring(0,2)) < 12) {
+        this.maintenance = false;
+      }
+      else {
+        this.maintenance = true;
+      }
+    });
   }
 }

@@ -23,4 +23,8 @@ export class LoginService {
       { response: token });
   }
 
+  getServerTime() {
+    return this.http.get(this.urlLogin + '/time');
+  }
+
 }

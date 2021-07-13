@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, Output, ViewChild } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTabGroup } from '@angular/material/tabs';
+import { EventEmitter } from 'events';
 import { ConfirmarPresencaService } from '../confirmar-presenca.service';
 import { LoginService } from '../login.service';
 import { PopupComponent } from '../popup/popup.component';
@@ -11,11 +12,11 @@ import { PopupComponent } from '../popup/popup.component';
   templateUrl: './main-page.component.html',
   styleUrls: ['./main-page.component.css']
 })
-export class MainPageComponent {
-
+export class MainPageComponent { 
+  
   constructor(private confirmarPresencaService: ConfirmarPresencaService, public dialog: MatDialog, private loginAPI: LoginService) { }
 
-  validName = new FormControl('', [Validators.required]);
+  validName = new FormControl('', [Validators.pattern('[A-Za-z\u00C0-\u00FF]+[A-Za-z\u00C0-\u00FF ]*'), Validators.required]);
   enableElements = true;
   recaptchaFail = true;
   nome;
@@ -23,6 +24,9 @@ export class MainPageComponent {
   getErrorMessage() {
     if (this.validName.hasError('required')) {
       return 'O nome não pode estar em branco';
+    }
+    if (this.validName.hasError('pattern')) {
+      return 'Existem caracteres inválidos. É possível incluir apenas um nome por vez.'
     }
   }
 
@@ -35,8 +39,8 @@ export class MainPageComponent {
         }
       });
       this.validName = new FormControl({ value: this.nome, disabled: true });
-      dialogRef.afterClosed().subscribe(() => { matTab.selectedIndex++; });
       this.enableElements = false;
+      dialogRef.afterClosed().subscribe(() => { matTab.selectedIndex++; matTab.ngAfterContentChecked() });
     }, (err) => {
       this.dialog.open(PopupComponent, {
         data: {
