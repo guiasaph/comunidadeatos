@@ -1,15 +1,22 @@
-<button style="position: fixed; top: 0; right: 0; margin-right: 3%;" (click)="logoff()" mat-icon-button aria-label="Logout">
-    LOGOFF <mat-icon>exit_to_app</mat-icon>
-</button>
+<div style="float: right; margin-right: 2%;">
+  <button (click)="logoff()" mat-icon-button aria-label="Logout">
+      SAIR <mat-icon>exit_to_app</mat-icon>
+  </button>
+</div>
+<div style="float: right; margin-right: 2%;">
+  <button (click)="downloadExcel()" mat-icon-button>
+    Download Excel <mat-icon>assignment</mat-icon>
+  </button>
+</div>
 <div style="width: 100%; height: 100%; display: flex; align-items: center; flex-direction: column;">
-    <mat-form-field style="width: 97%; padding-top: 2%;">
+    <mat-form-field style="width: 97%;">
         <input matInput (keyup)="applyFilter($event.target.value)" placeholder="FILTRE AQUI! (Pode filtrar por nome, whatsapp ou data de nascimento)">
     </mat-form-field>
-    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" style="width: 98%;">     
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" style="width: 98%;">     
       
         <!-- Name Column -->
         <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef> Nome </th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Nome </th>
           <td mat-cell *matCellDef="let element"> <div *ngIf="!element.updateNome">
                                                     {{element.name}}
                                                     <button mat-button (click)="element.updateNome = true;"><mat-icon>edit</mat-icon></button>
@@ -72,5 +79,5 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
-      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [length]="dataSource.data.length" style="width: 98%"></mat-paginator>
+      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [length]="dataSource.data.length" [pageSize]="100" style="width: 98%"></mat-paginator>
 </div>

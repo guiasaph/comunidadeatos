@@ -1,20 +1,23 @@
-import { AfterContentChecked, AfterContentInit, AfterViewChecked, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterContentChecked, AfterContentInit, AfterViewChecked, AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { CadastrarMembroService } from '../cadastrar-membro.service';
 import { LoginService } from '../login.service';
 import { PopupComponent } from '../popup/popup.component';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-admin-panel',
   templateUrl: './admin-panel.component.html',
   styleUrls: ['./admin-panel.component.css']
 })
-export class AdminPanelComponent implements OnInit {
+export class AdminPanelComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
   displayedColumns: string[] = ['name', 'phone', 'birthDate', 'remove'];
   dataSource: MatTableDataSource<any>;
 
@@ -29,6 +32,10 @@ export class AdminPanelComponent implements OnInit {
     });
   }
 
+  ngAfterViewInit() {
+    this.dataSource.sort = this.sort;
+  }
+
   applyFilter(filterValue: string) {
     filterValue = filterValue.trim();
     filterValue = filterValue.toLowerCase();
@@ -38,6 +45,12 @@ export class AdminPanelComponent implements OnInit {
   logoff() {
     window.localStorage.clear();
     this.route.navigate(['/']);
+  }
+
+  downloadExcel() {
+    this.membroService.getExcelFile().subscribe(data => {
+      saveAs(data, 'Comunidade_Atos_Usuarios_Cadastrados.xlsx')
+    });
   }
 
   confirmExclusion(item) {
