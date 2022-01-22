@@ -1,6 +1,6 @@
 # Front Comunidade Atos
 
-Uma plataforma simples para cadastro de membros, controle de lotação e envio de e-mails. 
+Uma plataforma simples feita para a igreja Comunidade Atos para cadastro de membros, controle de lotação e envio de e-mails. 
 
 Tecnologias utilizadas:
  - Angular 9
