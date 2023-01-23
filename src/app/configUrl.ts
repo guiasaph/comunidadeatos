@@ -1,1 +1,1 @@
-export const url = 'https://boiling-forest-22324.herokuapp.com';
+export const url = 'https://backend-comunidade-atos.vercel.app';
