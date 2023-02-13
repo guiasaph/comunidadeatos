@@ -17,9 +17,9 @@ export class CadastrarMembroService {
     return this.http.get(url + '/register/all');
   }
 
-  getExcelFile() {
-    return this.http.get(url + '/register/excel', {responseType: 'blob'});
-  }
+  // getExcelFile() {
+  //   return this.http.get(url + '/register/excel', {responseType: "blob"});
+  // }
 
   deleteMember(member) {
     return this.http.delete(url + '/register/' + member.id);

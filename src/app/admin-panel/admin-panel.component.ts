@@ -1,4 +1,4 @@
-import { AfterContentChecked, AfterContentInit, AfterViewChecked, AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 import { CadastrarMembroService } from '../cadastrar-membro.service';
 import { LoginService } from '../login.service';
 import { PopupComponent } from '../popup/popup.component';
-import { saveAs } from 'file-saver';
+import { utils, writeFileXLSX } from 'xlsx'
 
 @Component({
   selector: 'app-admin-panel',
@@ -48,8 +48,15 @@ export class AdminPanelComponent implements OnInit, AfterViewInit {
   }
 
   downloadExcel() {
-    this.membroService.getExcelFile().subscribe(data => {
-      saveAs(data, 'Comunidade_Atos_Usuarios_Cadastrados.xlsx')
+    this.membroService.getAllMembers().subscribe((data: any) => {
+      data = data.map(x => ({
+        "Nome": x.name,
+        "Telefone": x.phone,
+        "Data Aniversario": x.birthDate
+      }))
+      const workbook = utils.book_new()
+      utils.book_append_sheet(workbook, utils.json_to_sheet(data), "Membros")
+      writeFileXLSX(workbook, "Comunidade_Atos_Usuarios_Cadastrados.xlsx", { compression: true })
     });
   }
 
